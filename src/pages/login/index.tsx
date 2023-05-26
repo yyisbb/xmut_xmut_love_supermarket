@@ -4,8 +4,6 @@ import Logo from '@/assets/logo.svg';
 import LoginForm from './form';
 import LoginBanner from './banner';
 import styles from './style/index.module.less';
-import Register from '@/pages/login/register';
-import { getToken } from '@/store/token';
 import { useHistory } from 'react-router';
 
 function Login() {
@@ -14,11 +12,6 @@ function Login() {
 
   useEffect(() => {
     document.body.setAttribute('arco-theme', 'light');
-
-    if (getToken() && window.location.pathname === '/login') {
-      history.push('/dashboard/workplace');
-      return;
-    }
   }, []);
 
   return (
@@ -34,11 +27,7 @@ function Login() {
       </div>
       <div className={styles.content}>
         <div className={styles['content-inner']}>
-          {pageChange ? (
-            <LoginForm setPageChange={setPageChange} pageChange={pageChange} />
-          ) : (
-            <Register setPageChange={setPageChange} pageChange={pageChange} />
-          )}
+          <LoginForm setPageChange={setPageChange} pageChange={pageChange} />
         </div>
         <div className={styles.footer}>
           <Footer />

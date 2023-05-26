@@ -8,6 +8,7 @@ import { getToken, setToken } from '@/store/token';
 import { useHistory } from 'react-router';
 import { useUserInfoStore } from '@/store/user';
 import { shallow } from 'zustand/shallow';
+import { useDispatch } from 'react-redux';
 
 interface LoginForm {
   pageChange?: boolean;
@@ -18,6 +19,7 @@ export default function LoginForm(props: LoginForm) {
   const [loading, setLoading] = useState(false);
   const history = useHistory();
   const setUserInfo = useUserInfoStore((state) => state.setUserInfo, shallow);
+  //TODO 权限
   const userInfo = useUserInfoStore((state) => state.userInfo);
 
   const fetchUserInfo = () => {
@@ -40,8 +42,8 @@ export default function LoginForm(props: LoginForm) {
       .then((res) => {
         setToken(res);
         Message.success('登录成功');
-        history.push('/dashboard/workplace');
         fetchUserInfo();
+        history.push('/');
       })
       .catch((e) => {
         Message.error(e);
@@ -65,8 +67,12 @@ export default function LoginForm(props: LoginForm) {
 
   return (
     <div className={styles['login-form-wrapper']}>
-      <div className={styles['login-form-title']}>登录 XMUT爱心超市管理系统</div>
-      <div className={styles['login-form-sub-title']}>登录 XMUT爱心超市管理系统</div>
+      <div className={styles['login-form-title']}>
+        登录 XMUT爱心超市管理系统
+      </div>
+      <div className={styles['login-form-sub-title']}>
+        登录 XMUT爱心超市管理系统
+      </div>
       <Form
         className={styles['login-form']}
         layout="vertical"
@@ -96,16 +102,6 @@ export default function LoginForm(props: LoginForm) {
         <Space size={16} direction="vertical">
           <Button type="primary" long onClick={onSubmitClick} loading={loading}>
             登录
-          </Button>
-          <Button
-            onClick={() => {
-              props.setPageChange(!props.pageChange);
-            }}
-            long
-            type="primary"
-            status={'warning'}
-          >
-            注册
           </Button>
         </Space>
       </Form>

@@ -8,7 +8,8 @@ import {
   Grid,
   Space,
   Button,
-  Message, Modal,
+  Message,
+  Modal,
 } from '@arco-design/web-react';
 import { FormInstance } from '@arco-design/web-react/es/Form';
 import axios from 'axios';
@@ -46,41 +47,21 @@ function GroupForm() {
     <div className={styles.container}>
       <Form layout="vertical" ref={formRef} className={styles['form-group']}>
         <Card>
-          <Typography.Title heading={6}>
-            新增用户
-          </Typography.Title>
+          <Typography.Title heading={6}>新增用户</Typography.Title>
           <Grid.Row gutter={80}>
             <Grid.Col span={8}>
-              <Form.Item
-                label={'用户名'}
-              >
-                <Input
-                  placeholder={
-                    '请输入用户名'
-                  }
-                />
+              <Form.Item label={'用户名'}>
+                <Input placeholder={'请输入用户名'} />
               </Form.Item>
             </Grid.Col>
             <Grid.Col span={8}>
-              <Form.Item
-                  label={'姓名'}
-              >
-                <Input
-                    placeholder={
-                      '请输入姓名'
-                    }
-                />
+              <Form.Item label={'姓名'}>
+                <Input placeholder={'请输入姓名'} />
               </Form.Item>
             </Grid.Col>
             <Grid.Col span={8}>
-              <Form.Item
-                label={'邮箱'}
-              >
-                <Input
-                  placeholder={
-                    '请输入邮箱'
-                  }
-                />
+              <Form.Item label={'邮箱'}>
+                <Input placeholder={'请输入邮箱'} />
               </Form.Item>
             </Grid.Col>
           </Grid.Row>
@@ -101,8 +82,6 @@ function GroupForm() {
           </Button>
         </Space>
       </div>
-
-
     </div>
   );
 }

@@ -23,22 +23,45 @@ export const routes: IRoute[] = [
     ],
   },
   {
+    name: '学生功能',
+    key: 'student',
+    children: [
+      {
+        name: '存物品',
+        key: 'student/deposit',
+      },
+      {
+        name: '取物品',
+        key: 'student/take',
+      },
+    ],
+    admin: 'user',
+  },
+  {
     name: '系统管理',
     key: 'settings',
+    admin: 'admin',
     children: [
       {
         name: '用户列表',
-        key: 'userManager/userList',
-      },
-      {
-        name: '实例页',
-        key: 'userManager/addUser',
+        key: 'userList',
       },
       {
         name: '分类列表',
-        key: 'classifyManager/classifyList',
+        key: 'classifyList',
       },
-
+      {
+        name: '位置列表',
+        key: 'locationList',
+      },
+      {
+        name: '货物列表',
+        key: 'cargoList',
+      },
+      {
+        name: '存取记录列表',
+        key: 'recordList',
+      },
     ],
   },
 ];
@@ -54,42 +77,19 @@ export const getName = (path: string, routes) => {
   });
 };
 
-export const generatePermission = (role: string) => {
-  const actions = role === 'admin' ? ['*'] : ['read'];
-  const result = {};
-  routes.forEach((item) => {
-    if (item.children) {
-      item.children.forEach((child) => {
-        result[child.name] = actions;
-      });
-    }
-  });
-  return result;
-};
-
 const useRoute = (userPermission): [IRoute[], string] => {
-  const filterRoute = (routes: IRoute[], arr = []): IRoute[] => {
-    if (!routes.length) {
-      return [];
-    }
+  const filterRoute = (routes: IRoute[], arr: IRoute[] = []): IRoute[] => {
     for (const route of routes) {
-      const { requiredPermissions, oneOfPerm } = route;
-      let visible = true;
-      if (requiredPermissions) {
-        visible = auth({ requiredPermissions, oneOfPerm }, userPermission);
-      }
+      const { admin, children } = route;
 
-      if (!visible) {
-        continue;
-      }
-      if (route.children && route.children.length) {
-        const newRoute = { ...route, children: [] };
-        filterRoute(route.children, newRoute.children);
-        if (newRoute.children.length) {
-          arr.push(newRoute);
+      if (admin === userPermission || !admin) {
+        const newRoute: IRoute = { ...route };
+
+        if (children && children.length) {
+          newRoute.children = filterRoute(children);
         }
-      } else {
-        arr.push({ ...route });
+
+        arr.push(newRoute);
       }
     }
 

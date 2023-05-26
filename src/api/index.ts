@@ -22,7 +22,7 @@ request.interceptors.response.use(
   (err: AxiosError) => {
     console.log('err is ', err);
 
-    if (err.message.indexOf('timeout') !== -1) {
+    if (err.message.includes('timeout')) {
       // 根据响应的错误提示
       removeToken();
       Message.error('无网络或请求失败,请检查后端是否已部署');

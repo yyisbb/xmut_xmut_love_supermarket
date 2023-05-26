@@ -34,6 +34,11 @@ export function getColumns(
       render: (value) => <Text copyable>{value}</Text>,
     },
     {
+      title: '学号',
+      dataIndex: 'studentId',
+      render: (value) => <Text copyable>{value}</Text>,
+    },
+    {
       title: '邮箱',
       dataIndex: 'email',
       render: (value) => <Text copyable>{value}</Text>,
@@ -54,36 +59,42 @@ export function getColumns(
       headerCellStyle: { paddingLeft: '15px' },
       render: (_, record) => (
         <Space>
-          {
-            record.access!=='admin'? <Button
-                  type="primary"
-                  size="small"
-                  status={'warning'}
-                  onClick={() => callback(record, 'reset')}
-              >
-                重置密码
-              </Button>:''
-          }
-          {
-            record.access!=='admin'? <Button
-                type="primary"
-                size="small"
-                status={'danger'}
-                onClick={() => callback(record, 'delete')}
+          {record.access !== 'admin' ? (
+            <Button
+              type="primary"
+              size="small"
+              status={'warning'}
+              onClick={() => callback(record, 'reset')}
+            >
+              重置密码
+            </Button>
+          ) : (
+            ''
+          )}
+          {record.access !== 'admin' ? (
+            <Button
+              type="primary"
+              size="small"
+              status={'danger'}
+              onClick={() => callback(record, 'delete')}
             >
               删除用户
-            </Button>:''
-          }
-          {
-            record.access!=='admin'? <Button
-                type="primary"
-                size="small"
-                status={'default'}
-                onClick={() => callback(record, 'update')}
+            </Button>
+          ) : (
+            ''
+          )}
+          {record.access !== 'admin' ? (
+            <Button
+              type="primary"
+              size="small"
+              status={'default'}
+              onClick={() => callback(record, 'update')}
             >
               修改用户
-            </Button>:''
-          }
+            </Button>
+          ) : (
+            ''
+          )}
         </Space>
       ),
     },

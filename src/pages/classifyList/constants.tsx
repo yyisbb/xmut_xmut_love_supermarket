@@ -38,20 +38,28 @@ export function getColumns(
       render: (_, record) => (
         <Space>
           <Button
-              type="primary"
-              size="small"
-              status={'danger'}
-              onClick={() => callback(record, 'delete')}
+            type="primary"
+            size="small"
+            status={'danger'}
+            onClick={() => callback(record, 'delete')}
           >
             删除分类
           </Button>
           <Button
-              type="primary"
-              size="small"
-              status={'warning'}
-              onClick={() => callback(record, 'update')}
+            type="primary"
+            size="small"
+            status={'warning'}
+            onClick={() => callback(record, 'update')}
           >
             修改分类
+          </Button>
+          <Button
+            type="primary"
+            size="small"
+            status={'warning'}
+            onClick={() => callback(record, 'create')}
+          >
+            创建子分类
           </Button>
         </Space>
       ),

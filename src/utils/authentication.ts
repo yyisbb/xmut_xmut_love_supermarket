@@ -12,6 +12,7 @@ type Auth = {
 export interface AuthParams {
   requiredPermissions?: Array<Auth>;
   oneOfPerm?: boolean;
+  admin?: string;
 }
 
 const judge = (actions: string[], perm: string[]) => {

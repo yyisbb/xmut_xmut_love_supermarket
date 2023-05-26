@@ -15,6 +15,8 @@ import {
   IconMenuUnfold,
   IconSettings,
   IconList,
+  IconUser,
+  IconHome,
 } from '@arco-design/web-react/icon';
 import qs from 'query-string';
 import NProgress from 'nprogress';
@@ -27,6 +29,8 @@ import lazyload from './utils/lazyload';
 import styles from './style/layout.module.less';
 import { useGlobalStore } from '@/store/global';
 import { getToken } from '@/store/token';
+import { useDispatch } from 'react-redux';
+import { useUserInfoStore } from '@/store/user';
 
 const MenuItem = Menu.Item;
 const SubMenu = Menu.SubMenu;
@@ -40,10 +44,10 @@ function getIconFromKey(key) {
       return <IconDashboard className={styles.icon} />;
     case 'settings':
       return <IconSettings className={styles.icon} />;
-    case 'list':
-      return <IconList className={styles.icon} />;
-    case 'example':
-      return <IconTag className={styles.icon} />;
+    case 'student':
+      return <IconUser className={styles.icon} />;
+    case 'home':
+      return <IconHome className={styles.icon} />;
     default:
       return <div className={styles['icon-empty']} />;
   }
@@ -73,9 +77,11 @@ function PageLayout() {
   const currentComponent = qs.parseUrl(pathname).url.slice(1);
   const settings = useGlobalStore((state) => state.settings);
   const userLoading = useGlobalStore((state) => state.userLoading);
-
+  const access = useGlobalStore((state) => state.access);
   //TODO 权限
-  const [routes, defaultRoute] = useRoute(['*']);
+  const userInfo = useUserInfoStore((state) => state.userInfo);
+
+  const [routes, defaultRoute] = useRoute(userInfo.access);
   const defaultSelectedKeys = [currentComponent || defaultRoute];
   const paths = (currentComponent || defaultRoute).split('/');
   const defaultOpenKeys = paths.slice(0, paths.length - 1);
