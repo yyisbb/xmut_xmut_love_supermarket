@@ -132,7 +132,7 @@ function ClassifyList() {
       if (isCreate) {
         createClassify({
           name,
-          parentId: classifyId ? classifyId : 0,
+          parentId: classifyId ? classifyId : null,
         })
           .then((res) => {
             fetchData();
